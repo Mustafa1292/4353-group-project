@@ -8,7 +8,7 @@ import { LoginPage } from './pages/login';
 import { RegisterPage } from './pages/register';
 import { QuoteForm } from './pages/quote';
 import { History } from './pages/history';
-
+import { Profile } from './pages/profile';
 
 class App extends React.Component {
     constructor(props) {
@@ -26,7 +26,8 @@ class App extends React.Component {
                     <div>
                         <Router history={history}>
                             <Switch>
-                                <Route path="/profile" component={HomePage} />
+                                <Route path="/home" component={HomePage} />
+                                <Route path="/profile" component={Profile} />
                                 <Route path="/login" component={LoginPage} />
                                 <Route path="/register" component={RegisterPage} />
                                 <Route path="/quote" component={QuoteForm} />
