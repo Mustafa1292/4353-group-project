@@ -9,6 +9,7 @@ class HomePage extends React.Component {
         return (
             <div>
                 <h1>FuelsCo</h1>
+
                 <p>
                     <Link to="/login">Logout</Link>
                 </p>
