@@ -8,15 +8,39 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 import DateFnsUtils from '@date-io/date-fns';
 import AssessmentIcon from '@material-ui/icons/Assessment';
+import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
+import { connect } from 'react-redux';
+import { userActions } from '../actions';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-
+const useStyles = makeStyles((theme) => ({
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 class Quote extends React.Component {
+  
+  /*onstructor(props) {
+  this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  
+  
+  handleSubmit(e) {
+    e.preventDefault();
+
+    this.setState({ submitted: true });
+    const { delivery } = this.state;
+    if (delivery) {
+        this.props.quoteFormSub(delivery);
+    }
+}*/
+
+
     render() {
       const classes = this.props.classes
         return (
@@ -32,7 +56,7 @@ class Quote extends React.Component {
                     <Grid item xs={12}>
                         <TextField
                           id="delivery"
-                          label="Delivery"
+                          label="Delivery date"
                           type="date"
                           defaultValue="2021-09-01"
                           InputLabelProps={{
@@ -82,6 +106,18 @@ class Quote extends React.Component {
                             disabled
                           />
                         </Grid>
+                        <Grid item xs={12}>
+                        <Button
+                    onSubmit={this.handleSubmit}
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Submit
+                  </Button></Grid>
+
                         </Grid>
             </div>
             </Container>
@@ -91,8 +127,10 @@ class Quote extends React.Component {
     
 }
 
-const QuoteForm = {};
-export { Quote as QuoteForm };
+
+
+const QuoteF = (withStyles (useStyles) (Quote));
+export { QuoteF as QuoteForm };
 
 
 export default function DatePickers() {
