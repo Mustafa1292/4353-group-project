@@ -32,7 +32,6 @@ class Quote extends React.Component {
   
   handleSubmit(e) {
     e.preventDefault();
-
     this.setState({ submitted: true });
     const { delivery } = this.state;
     if (delivery) {
