@@ -48,20 +48,35 @@ class RegisterPage extends React.Component {
                 username: '',
                 password: ''
             },
-            submitted: false
+            submitted: false,
+            errors:{
+              username: null,
+              password: null
+            }
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    
+
     handleChange(event) {
         const { name, value } = event.target;
-        const { user } = this.state;
+        const { user, errors } = this.state;
+        console.log("event ${JSO}"+ JSON.stringify(errors));
+        if(value.length<8 || value.length >50){
+          errors[name] = `${name} should be greater than 8 and less than 50`;
+        }else{
+          errors[name] = null;
+        }
         this.setState({
             user: {
                 ...user,
                 [name]: value
+            },
+            errors: {
+              ...errors
             }
         });
     }
@@ -92,7 +107,7 @@ class RegisterPage extends React.Component {
                     </Typography>
                     <form className={classes.form} noValidate>
                       <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
+                        {/* <Grid item xs={12} sm={6}>
                           <TextField
                             autoComplete="fname"
                             name="firstName"
@@ -102,6 +117,7 @@ class RegisterPage extends React.Component {
                             id="firstName"
                             label="First Name"
                             autoFocus
+                            error={""}
                           />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -114,16 +130,19 @@ class RegisterPage extends React.Component {
                             name="lastName"
                             autoComplete="lname"
                           />
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={12}>
                           <TextField
                             variant="outlined"
                             required
                             fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
+                            id="username"
+                            label="UserName"
+                            name="username"
+                            autoComplete="username"
+                            error={this.state.errors.username}
+                            onChange={e => this.handleChange(e)}
+                            helperText={this.state.errors.username}
                           />
                         </Grid>
                         <Grid item xs={12}>
@@ -136,7 +155,10 @@ class RegisterPage extends React.Component {
                             type="password"
                             id="password"
                             autoComplete="current-password"
-                          />
+                            error={this.state.errors.password}
+                            onChange={e => this.handleChange(e)}
+                            helperText={this.state.errors.password}
+                            />
                         </Grid>
                         <Grid item xs={12}>
                           <FormControlLabel
