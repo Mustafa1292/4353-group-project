@@ -73,5 +73,4 @@ class HistoryTable extends React.Component {
 // export { HistoryTable as History };
 
 const HistoryT = (withStyles (useStyles) (HistoryTable));
-
 export { HistoryT as History };

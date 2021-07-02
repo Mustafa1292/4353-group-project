@@ -194,4 +194,3 @@ class Profileform extends React.Component {
 const ProfileP = (withStyles (useStyles) (Profileform));
 
 export { ProfileP as Profile };
-

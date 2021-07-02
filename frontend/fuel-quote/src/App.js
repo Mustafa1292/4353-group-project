@@ -9,7 +9,7 @@ import { RegisterPage } from './pages/register';
 import { QuoteForm } from './pages/quote';
 import { History } from './pages/history';
 import { Profile } from './pages/profile';
-
+import ButtonAppBar from './components/header'
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -24,6 +24,7 @@ class App extends React.Component {
             <div>
                 <div>
                     <div>
+                        <ButtonAppBar/>
                         <Router history={history}>
                             <Switch>
                                 <Route path="/home" component={HomePage} />
@@ -32,7 +33,7 @@ class App extends React.Component {
                                 <Route path="/register" component={RegisterPage} />
                                 <Route path="/quote" component={QuoteForm} />
                                 <Route path="/history" component={History} />
-                                <Redirect from="*" to="/" />
+                                <Redirect from="*" to="/login" />
                             </Switch>
                         </Router>
                     </div>
