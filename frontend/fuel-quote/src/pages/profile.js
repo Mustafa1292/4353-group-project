@@ -99,17 +99,17 @@ class Profileform extends React.Component {
       errors[name] = null;
     }
 
-    // if (address1.length < 8 || address1.length > 100) {
-    //   errors[name] = `${name} should be greater than 8 and less than 50`;
-    // } else {
-    //   errors[name] = null;
-    // }
+    if (name==='address1' && (value.length < 8 || value.length > 100)) {
+      errors[name] = `${name} should be greater than 8 and less than 50`;
+    } else {
+      errors[name] = null;
+    }
 
-    // if (address2.length < 8 || address2.length > 100) {
-    //   errors[name] = `${name} should be greater than 8 and less than 50`;
-    // } else {
-    //   errors[name] = null;
-    // }
+    if (name==='address2' && (value.length < 8 || value.length > 100)) {
+      errors[name] = `${name} should be greater than 8 and less than 50`;
+    } else {
+      errors[name] = null;
+    }
     
     if (name==='city' && (value.length < 8 || value.length > 100) && !(/^[a-zA-Z]+$/.test(value)) ) {
       errors[name] = `${name} should be greater than 8 and less than 50`;

@@ -90,7 +90,14 @@ class Quote extends React.Component {
         }else{
           errors[name] = null;
         }
-      }  
+      }
+      
+      if(name === 'gallons_req' && !(/^\d{0,1000}$/.test(value))){
+        errors[name] = `${name} should be greater than 1 and less than or equal to 100`;
+      }else{
+        errors[name] = null;
+      }
+      
       this.setState({
         quote: {
           ...quote,
@@ -153,6 +160,9 @@ class Quote extends React.Component {
                             id="gallons"
                             label="Gallons Requested"
                             name="gallons_req"
+                            onChange={e => this.handleChange(e)}
+                            error={this.state.errors.gallons_req!==null}
+                            helperText={this.state.errors.gallons_req}
                           />
                         </Grid>
                         <Grid item xs={12}>
