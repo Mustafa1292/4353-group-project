@@ -59,6 +59,78 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 class Profileform extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        profile: {
+            fullName: '',
+            address1: '',
+            address2: '',
+            city: '',
+            us_state: '',
+            zip: '',
+        },
+        submitted: false,
+        errors: {
+          fullName: null,
+          address1: null,
+          address2: null,
+          city: null,
+          us_state: null,
+          zip: null,
+        }
+    };
+
+    this.us_states=['TX','CA','NY'];
+
+    // this.handleChange = this.handleChange.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
+}
+
+  handleChange(event) {
+    const { name, value } = event.target;
+    const { profile, errors } = this.state;
+    console.log("event ${JSO}" + JSON.stringify(profile) + " : "+ this.us_states);
+    if (value.length < 8 || value.length > 50) {
+      errors[name] = `${name} should be greater than 8 and less than 50`;
+    } else {
+      errors[name] = null;
+    }
+
+    if (name==='address1' && (value.length < 8 || value.length > 100)) {
+      errors[name] = `${name} should be greater than 8 and less than 50`;
+    } else {
+      errors[name] = null;
+    }
+
+    if (name==='address2' && (value.length < 8 || value.length > 100)) {
+      errors[name] = `${name} should be greater than 8 and less than 50`;
+    } else {
+      errors[name] = null;
+    }
+    
+    if (name==='city' && (value.length < 8 || value.length > 100) && !(/^[a-zA-Z]+$/.test(value)) ) {
+      errors[name] = `${name} should be greater than 8 and less than 50`;
+    }  else if(name === 'zip' && (value.length<5 || value.length > 9) && !(/^\d{5,8}$/.test(value))){
+      errors[name] = `${name} should be greater than 5 and less than or equal to 9`;
+    }else if(name === 'us_state' && !(this.us_states.includes(value))){
+      errors[name] = `Select a valid state`;
+    }else{
+      errors[name] = null;
+    }
+    this.setState({
+      profile: {
+        ...profile,
+        [name]: value
+      },
+      errors: {
+        ...errors
+      }
+    });
+  }
+
     render() {
         const classes = this.props.classes
         return (
@@ -76,6 +148,9 @@ class Profileform extends React.Component {
             label="Full name"
             fullWidth
             autoComplete="full-name"
+            error={this.state.errors.fullName !==null}
+            onChange={e => this.handleChange(e)}
+            helperText={this.state.errors.fullName}
           />
         </Grid>
         <Grid item xs={12}>
@@ -86,6 +161,10 @@ class Profileform extends React.Component {
             label="Address line 1"
             fullWidth
             autoComplete="shipping address-line1"
+
+            error={this.state.errors.address1 !==null}
+            onChange={e => this.handleChange(e)}
+            helperText={this.state.errors.address1}
           />
         </Grid>
         <Grid item xs={12}>
@@ -95,6 +174,10 @@ class Profileform extends React.Component {
             label="Address line 2"
             fullWidth
             autoComplete="shipping address-line2"
+
+            error={this.state.errors.address2 !==null}
+            onChange={e => this.handleChange(e)}
+            helperText={this.state.errors.address2}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -105,6 +188,10 @@ class Profileform extends React.Component {
             label="City"
             fullWidth
             autoComplete="shipping address-level2"
+
+            error={this.state.errors.city !==null}
+            onChange={e => this.handleChange(e)}
+            helperText={this.state.errors.city}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -116,18 +203,19 @@ class Profileform extends React.Component {
         <Select
           labelId="demo-simple-select-required-label"
           id="demo-simple-select-required"
-          value='State'
-        //   onChange={handleChange}
+          value={this.state.profile.us_state}
+          onChange={e=> this.handleChange(e)}
+          name="us_state"
           className={classes.selectEmpty}
         >
           <MenuItem value="">
-            <em>None</em>
+            <em>Select State</em>
           </MenuItem>
-          <MenuItem value={10}>TX</MenuItem>
-          <MenuItem value={20}>CA</MenuItem>
-          <MenuItem value={30}>NY</MenuItem>
+          <MenuItem value={'TX'}>TX</MenuItem>
+          <MenuItem value={'CA'}>CA</MenuItem>
+          <MenuItem value={'NY'}>NY</MenuItem>
         </Select>
-        {/* <FormHelperText>Required</FormHelperText> */}
+        <FormHelperText>{this.state.errors.us_state}</FormHelperText>
       </FormControl>
 
 
@@ -164,6 +252,10 @@ class Profileform extends React.Component {
             label="Zip / Postal code"
             fullWidth
             autoComplete="shipping postal-code"
+
+            error={this.state.errors.zip}
+            onChange={e => this.handleChange(e)}
+            helperText={this.state.errors.zip}
           />
         </Grid>
         {/* <Grid item xs={12}>
@@ -194,3 +286,4 @@ class Profileform extends React.Component {
 const ProfileP = (withStyles (useStyles) (Profileform));
 
 export { ProfileP as Profile };
+
