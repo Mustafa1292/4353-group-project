@@ -45,7 +45,7 @@ class LoginPage extends React.Component {
         console.log(JSON.stringify(props));
         console.log("thisconlogin");
 
-        this.props.logout();
+      //  this.props.logout();
 
         this.state = {
             username: '',
@@ -55,9 +55,11 @@ class LoginPage extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleNewLogin = this.handleNewLogin.bind(this);
     }
 
     handleChange(e) {
+      console.log("change for the field", e);
         const { name, value } = e.target;
         this.setState({ [name]: value });
     }
@@ -67,6 +69,15 @@ class LoginPage extends React.Component {
 
         this.setState({ submitted: true });
         const { username, password } = this.state;
+        if (username && password) {
+            this.props.login(username, password);
+        }
+    }
+
+    handleNewLogin(e) {
+      const { username, password } = this.state;
+      console.log('new login', username, password);
+      this.setState({ submitted: true });
         if (username && password) {
             this.props.login(username, password);
         }
@@ -87,17 +98,22 @@ class LoginPage extends React.Component {
                 <Typography component="h1" variant="h5">
                   Sign in
                 </Typography>
+
+                <button onClick={this.handleNewLogin}>Another login in</button>
+
                 <form className={classes.form} noValidate>
                   <TextField
                     variant="outlined"
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
+                    id="username"
                     label="Email Address"
-                    name="email"
+                    name="username"
                     autoComplete="email"
                     autoFocus
+                    value={username}
+                    onChange={this.handleChange}
                   />
                   <TextField
                     variant="outlined"
@@ -109,6 +125,8 @@ class LoginPage extends React.Component {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    value={password}
+                    onChange={this.handleChange}
                   />
                   <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
@@ -122,7 +140,7 @@ class LoginPage extends React.Component {
                     color="primary"
                     className={classes.submit}
                   >
-                    Sign In
+                    Sign In EDITED
                   </Button>
                   <Grid container>
                     <Grid item xs>
