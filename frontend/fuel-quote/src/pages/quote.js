@@ -37,7 +37,6 @@ class Quote extends React.Component {
           delivery : '',
           address : '',
           gallons : '',
-          address : '',
           total : '',
           dateStr: dateStr, 
         },
@@ -46,7 +45,6 @@ class Quote extends React.Component {
           delivery : null,
           address : null,
           gallons : null,
-          address : null,
           total : null,
         }
     };

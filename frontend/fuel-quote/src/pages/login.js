@@ -43,7 +43,7 @@ class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         console.log(JSON.stringify(props));
-        console.log("login");
+        console.log("thisconlogin");
 
         this.props.logout();
 
@@ -140,13 +140,13 @@ class LoginPage extends React.Component {
               </div>
             </Container>
           );
-        };   
+        } 
 }
 
 function mapState(state) {
     const { loggingIn } = state.authentication;
     return { loggingIn };
-};
+}
 
 const actionCreators = {
     login: userActions.login,

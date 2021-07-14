@@ -7,10 +7,13 @@ export const userService = {
 };
 
 function login(username, password) {
+    return {};
 }
 
 function logout() {
+    return {};
 }
 
 function register(user) {
+    return {};
 }
