@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Router, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { history } from './helpers';
 import { alertActions } from './actions';
@@ -24,7 +24,7 @@ class App extends React.Component {
             <div>
                 <div>
                     <div>
-                        <BrowserRouter history={history}>
+                        <Router history={history}>
                         <ButtonAppBar/>
                             <Switch>
                                 <Route exact path="/" component={HomePage} />
@@ -35,7 +35,7 @@ class App extends React.Component {
                                 <Route exact path="/history" component={History} />
                                 {/* <Redirect exact from="*" to="/login" /> */}
                             </Switch>
-                        </BrowserRouter>
+                        </Router>
                     </div>
                 </div>
             </div>

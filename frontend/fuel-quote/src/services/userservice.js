@@ -3,7 +3,8 @@ import { authHeader } from '../helpers';
 export const userService = {
     login,
     logout,
-    register
+    register,
+    updateProfile,
 };
 
 function login(username, password) {
@@ -15,22 +16,50 @@ function login(username, password) {
     console.log("user service login")
     return fetch("http://localhost:8080/login", requestOptions)
         .then(handleResponse)
-        .then((data) => {
-            console.log("Service response data:", data.user);
+        .then((user) => {
+            console.log("Service response data:", user);
             //redux store 
-            localStorage.setItem('user', JSON.stringify(data.user));
-            return data.user;
+            localStorage.setItem('user', JSON.stringify(user));
+            return user;
         })
 
    // return {};
 }
 
 function logout() {
+    // localStorage.setItem('user', "");
+    localStorage.removeItem('user');
+    
     return {};
 }
 
 function register(user) {
-    return {};
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+    };
+    return fetch("http://localhost:8080/register", requestOptions)
+        .then(handleResponse)
+        .then((data) => {
+            console.log("Response from server after registration");
+            return data;
+        })
+}
+
+
+function updateProfile(username, profile) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({profile})
+    };
+    return fetch(`http://localhost:8080/user/${username}/profile`, requestOptions)
+        .then(handleResponse)
+        .then((data) => {
+            console.log("Response from server after registration");
+            return data.user;
+        })
 }
 
 

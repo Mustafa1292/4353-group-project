@@ -18,9 +18,9 @@ import {
 } from '@material-ui/pickers';
 
 const styles = ((theme) => ({
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
+  // submit: {
+  //   margin: theme.spacing(3, 0, 2),
+  // },
 }));
 
 class Quote extends React.Component {

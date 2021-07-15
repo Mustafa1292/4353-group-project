@@ -20,23 +20,23 @@ import { connect } from 'react-redux';
 import { userActions } from '../actions';
 
 const styles = ((theme) => ({
-    paper: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(3),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-    },
+    // paper: {
+    //   marginTop: theme.spacing(8),
+    //   display: 'flex',
+    //   flexDirection: 'column',
+    //   alignItems: 'center',
+    // },
+    // avatar: {
+    //   margin: theme.spacing(1),
+    //   backgroundColor: theme.palette.secondary.main,
+    // },
+    // form: {
+    //   width: '100%', // Fix IE 11 issue.
+    //   marginTop: theme.spacing(3),
+    // },
+    // submit: {
+    //   margin: theme.spacing(3, 0, 2),
+    // },
   }));
 
 class RegisterPage extends React.Component {
@@ -86,7 +86,8 @@ class RegisterPage extends React.Component {
 
         this.setState({ submitted: true });
         const { user } = this.state;
-        if (user.firstName && user.lastName && user.username && user.password) {
+        console.log('User in state', user);
+        if (user.username && user.password) {
             this.props.register(user);
         }
     }
@@ -105,7 +106,7 @@ class RegisterPage extends React.Component {
                     <Typography component="h1" variant="h5">
                       Sign up
                     </Typography>
-                    <form className={classes.form} noValidate>
+                    <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
                       <Grid container spacing={2}>
                         {/* <Grid item xs={12} sm={6}>
                           <TextField
@@ -140,6 +141,7 @@ class RegisterPage extends React.Component {
                             label="UserName"
                             name="username"
                             autoComplete="username"
+                            value={this.state.user.username}
                             error={this.state.errors.username}
                             onChange={e => this.handleChange(e)}
                             helperText={this.state.errors.username}
@@ -155,6 +157,7 @@ class RegisterPage extends React.Component {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            value={this.state.user.password}
                             error={this.state.errors.password}
                             onChange={e => this.handleChange(e)}
                             helperText={this.state.errors.password}
@@ -178,7 +181,7 @@ class RegisterPage extends React.Component {
                       </Button>
                       <Grid container justify="flex-end">
                         <Grid item>
-                          <MLink href="#" variant="body2">
+                          <MLink href="/login" variant="body2">
                             Already have an account? Sign in
                           </MLink>
                         </Grid>
