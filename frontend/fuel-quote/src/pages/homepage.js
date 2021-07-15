@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../actions';
+import {history} from "../helpers";
 
 class HomePage extends React.Component {
     render() {
@@ -15,6 +16,8 @@ class HomePage extends React.Component {
                 <p>
                     <Link to="/login">Logout</Link>
                 </p>
+
+                <button onClick={() => {history.push({pathname: '/profile'})}}>Test route change</button>
             </div>
         );
     }
