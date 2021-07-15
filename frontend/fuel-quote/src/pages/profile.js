@@ -14,7 +14,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles((theme) => ({
+const styles = ((theme) => ({
     appBar: {
       position: 'relative',
     },
@@ -283,7 +283,7 @@ class Profileform extends React.Component {
     }
 }
 
-const ProfileP = (withStyles (useStyles) (Profileform));
+const ProfileP = (withStyles (styles) (Profileform));
 
 export { ProfileP as Profile };
 

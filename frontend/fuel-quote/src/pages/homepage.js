@@ -10,6 +10,8 @@ class HomePage extends React.Component {
             <div>
                 <h1>FuelsCo</h1>
 
+                <h3>Hello, {user?.name || "guest"}</h3>
+
                 <p>
                     <Link to="/login">Logout</Link>
                 </p>

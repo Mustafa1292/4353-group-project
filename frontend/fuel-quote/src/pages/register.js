@@ -19,7 +19,7 @@ import { connect } from 'react-redux';
 
 import { userActions } from '../actions';
 
-const useStyles = makeStyles((theme) => ({
+const styles = ((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
       display: 'flex',
@@ -200,5 +200,5 @@ const actionCreators = {
     register: userActions.register
 }
 
-const connectedRegisterPage = connect(mapState, actionCreators)(withStyles (useStyles) (RegisterPage));
+const connectedRegisterPage = connect(mapState, actionCreators)(withStyles (styles) (RegisterPage));
 export { connectedRegisterPage as RegisterPage };

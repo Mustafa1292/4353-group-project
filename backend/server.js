@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:3000"
 };
 
 app.use(cors(corsOptions));
@@ -16,13 +16,13 @@ app.get("/", (req, res) => {
   res.json({ message: "FuelCo App" });
 });
 
-app.get("/login", (req, res) => {
+app.post("/login", (req, res) => {
     var name = req.body.username;
     var pass = req.body.password;
     if(name === 'test' && pass === 'test' ){
-        res.json({"result": "success"})
+        res.json({"user": {"name": "Test User", id: "abcde1234"}})
     }else{
-        res.json("{result: success}")
+        res.json({"result": "success"})
     }
   });
 

@@ -19,7 +19,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = makeStyles((theme) => ({
+const styles = ((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
       display: 'flex',
@@ -55,11 +55,11 @@ class LoginPage extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleNewLogin = this.handleNewLogin.bind(this);
+        // this.handleNewLogin = this.handleNewLogin.bind(this);
     }
 
     handleChange(e) {
-      console.log("change for the field", e);
+      // console.log("change for the field", e);
         const { name, value } = e.target;
         this.setState({ [name]: value });
     }
@@ -74,14 +74,13 @@ class LoginPage extends React.Component {
         }
     }
 
-    handleNewLogin(e) {
-      const { username, password } = this.state;
-      console.log('new login', username, password);
-      this.setState({ submitted: true });
-        if (username && password) {
-            this.props.login(username, password);
-        }
-    }
+    // handleNewLogin(e) {
+    //   const { username, password } = this.state;
+    //   this.setState({ submitted: true });
+    //     if (username && password) {
+    //         this.props.login(username, password);
+    //     }
+    // }
 
     render() {
         const { loggingIn } = this.props;
@@ -99,9 +98,9 @@ class LoginPage extends React.Component {
                   Sign in
                 </Typography>
 
-                <button onClick={this.handleNewLogin}>Another login in</button>
+                {/* <button onClick={this.handleNewLogin}>Another login in</button> */}
 
-                <form className={classes.form} noValidate>
+                <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
                   <TextField
                     variant="outlined"
                     margin="normal"
@@ -133,7 +132,6 @@ class LoginPage extends React.Component {
                     label="Remember me"
                   />
                   <Button
-                  onSubmit={this.handleSubmit}
                     type="submit"
                     fullWidth
                     variant="contained"

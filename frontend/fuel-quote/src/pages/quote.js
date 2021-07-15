@@ -17,7 +17,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-const useStyles = makeStyles((theme) => ({
+const styles = ((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
@@ -217,9 +217,9 @@ class Quote extends React.Component {
 
 
 
-const QuoteF = (withStyles (useStyles) (Quote));
+const QuoteF = (withStyles (styles) (Quote));
 export { QuoteF as QuoteForm };
 
 
-export default function DatePickers() {
-  const classes = useStyles();}
+// export default function DatePickers() {
+//   const classes = useStyles();}

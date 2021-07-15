@@ -10,11 +10,11 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles({
+const styles = {
   table: {
     minWidth: 650,
   },
-});
+};
 
   
 function createData(id, gals, address, date, price, total) {
@@ -72,5 +72,5 @@ class HistoryTable extends React.Component {
 // const History = {};
 // export { HistoryTable as History };
 
-const HistoryT = (withStyles (useStyles) (HistoryTable));
+const HistoryT = (withStyles (styles) (HistoryTable));
 export { HistoryT as History };
