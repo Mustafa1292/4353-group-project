@@ -10,6 +10,9 @@ var corsOptions = {
 
 const users = [];
 
+ var quoteId = 0; 
+ const quotes = {};
+
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -66,7 +69,67 @@ app.post("/login", (req, res) => {
     res.status(200).json({"result": "user updated", user: existingUser});
 
   })
+  
+  app.get("/user/:username/address",(req, res) =>{
+    console.log("addrses is", req.params)
+    const username = req.params.username;
+    
+    const existingUser = users.find((user) => user.username === username )
+    if(!existingUser || !existingUser.username) {
+      return res.status(404).json({"result": "no such user"})
+    }
+    res.status(200).json({"result": "user address", address: existingUser.profile});
+  })
 
+  function calculatePrice(address){
+    return 10.00
+  }
+
+  app.post("/price/:username/suggestedprice", (req, res) => {
+
+    console.log("suggested body:", req.body);
+
+    const gallons = parseInt(req.body.gallons);
+    const address = req.body.address;
+
+    var suggestedPricePerGallon = calculatePrice(address);
+    var suggestedPrice = suggestedPricePerGallon * gallons
+    res.status(200).json({"result": "price", pricePerGallon: suggestedPricePerGallon});
+
+  })
+
+  app.post("/quotes/:username/order", (req, res) => {
+    const username = req.params.username;
+    const gallons = parseInt(req.body.gallons);
+    const address = req.body.address;
+    const date = req.body.date;
+
+    const pricePerGallon = calculatePrice(address);
+    
+    const total = gallons * pricePerGallon;
+
+    var id = quoteId++;
+    quotes[id] = {
+      id: id,
+      username: username,
+      address: address,
+      gallons: gallons,
+      date: date,
+      pricePerGallon: pricePerGallon,
+      total: total
+    }
+    res.status(200).json({ result: "added a quote", quoteId: id })
+  })
+
+  app.get("/quotes/:username", (req, res)=>{
+    const username = req.params.username;
+    const items = Object.values(quotes).filter((quote)=>{
+      return quote.username === username
+    })
+    res.status(200).json({"result": "quotes by usernam", quotes: items});
+
+  })
+  
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server running at ${PORT}.`);

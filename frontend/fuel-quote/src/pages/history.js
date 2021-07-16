@@ -25,8 +25,28 @@ const rows = [
     createData(2, 16, '123 Rainbow Rd.', '6/27/2021', 102.0, 210),
 ];
 class HistoryTable extends React.Component {
+  state = {
+    rows: []
+  };
+
+  componentDidMount(){
+    const userProfile = JSON.parse(localStorage.getItem("user"));
+    const username = userProfile.username
+    fetch(`http://localhost:8080/quotes/${username}`).then((response)=>{
+      return response.json().then((json)=>{
+        if(!response.ok){
+          console.error(json);
+        } else {
+          this.setState({ rows: json.quotes })
+        }
+      })
+    })
+  }
+
     render() {
         const classes = this.props.classes
+        const rows = this.state.rows;
+        console.log(rows);
         return (
             <div>
                 <h1>HistoryTable</h1>
@@ -47,15 +67,17 @@ class HistoryTable extends React.Component {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.id}>
               <TableCell component="th" scope="row">
                 {row.id}
               </TableCell>
-              <TableCell align="right">{row.gals}</TableCell>
-              <TableCell align="right">{row.address}</TableCell>
+              <TableCell align="right">{row.gallons}</TableCell>
+              <TableCell align="right">
+                {JSON.stringify(row.address)}
+              </TableCell>
               <TableCell align="right">{row.date}</TableCell>
-              <TableCell align="right">{row.price}</TableCell>
-              <TableCell align="right">{row.total}</TableCell>
+              <TableCell align="right">{row.pricePerGallon}</TableCell>
+              <TableCell align="right">{row.pricePerGallon * row.gallons}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -66,11 +88,6 @@ class HistoryTable extends React.Component {
         );
     }
 }
-
-
-
-// const History = {};
-// export { HistoryTable as History };
 
 const HistoryT = (withStyles (styles) (HistoryTable));
 export { HistoryT as History };
