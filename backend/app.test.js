@@ -130,7 +130,18 @@ describe("app", () => {
             })
         })
 
+        describe("/quotes/:username/order", () => {
+
+            it("should return return a 200 response with the quote ID", async () => {
+                const response = await request(app).post("/quotes/mockuser/order");
+                expect(response.body).toEqual({ result: "added a quote", quoteId: 0 })
+
+            })
+
+        });
+
     });
 
 })
+
 
