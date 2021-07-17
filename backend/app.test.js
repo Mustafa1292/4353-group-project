@@ -68,8 +68,61 @@ describe("app", () => {
             })
                
         });
+        
+        describe("/price/:username/suggestedprice", () => {
 
+            it("should return a correct price per gallon", async () => {
+                const response = await request(app).post("/price/mockuser/suggestedprice");
+                expect(response.body).toEqual({"result": "price", pricePerGallon: 10})
+
+            })
+
+        });
+
+        describe("/user/:username/profile", () => {
+
+            it("should update the user's profile" , async () => {
+
+                let mockProfileData =  {address1 : "123 updated address", address2 : "address2"}
+                await request(app).post('/register').send({username: "mockuser", password: "mockpass"});
+                const response = await request(app).post("/user/mockuser/profile").send({profile: mockProfileData});
+                // console.log(response.body);
+                expect(response.statusCode).toBe(200);
+
+                expect(response.body.user.profile).toEqual(mockProfileData)
+
+
+
+            });
+
+            
+        });
+
+        describe("/user/:username/address", (req,res) => {
+            it("should return the user's address", async() => {
+                await request(app).post('/register').send({username: "mockuser", password: "mockpass"});
+                const response = await request(app).get("/user/non-existing-user/profile");
+                expect(response.statusCode).toBe(404);
+            });
+            it("should return 404 for invalid user", async () => {
+
+                await request(app).post('/register').send({username: "mockuser", password: "mockpass"});
+                const response = await request(app).get("/user/non-existing-user/address");
+
+                expect(response.statusCode).toBe(404);
+            });
+        });
+
+        describe("/quotes_history", () => {
+            it("should return response 200", async () => {
+                await request(app).post('/register').send({username: "mockuser3", password: "mockpass"});
+                const response = await request(app).post('/login').send({username:"mockuser3", password: "mockpass"})
+                expect(response.statusCode).toBe(200);
+                
+            })
+        })
 
     });
 
 })
+
