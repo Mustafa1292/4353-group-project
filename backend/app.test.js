@@ -88,7 +88,9 @@ describe("app", () => {
                 const response = await request(app).post("/user/mockuser/profile").send({profile: mockProfileData});
                 // console.log(response.body);
                 expect(response.statusCode).toBe(200);
-
+                
+                const responsebad = await request(app).post("/user/non-existing-user/profile").send({profile: mockProfileData});
+                expect(responsebad.statusCode).toBe(404);
                 expect(response.body.user.profile).toEqual(mockProfileData)
 
 
@@ -111,6 +113,12 @@ describe("app", () => {
 
                 expect(response.statusCode).toBe(404);
             });
+            it("should return response 200", async () => {
+                await request(app).post('/register').send({username: "mockuser3", password: "mockpass"});
+                const response = await request(app).get("/user/mockuser3/address");
+                expect(response.statusCode).toBe(200);
+                
+            })
         });
 
         describe("/quotes_history", () => {
