@@ -124,7 +124,7 @@ describe("app", () => {
         describe("/quotes_history", () => {
             it("should return response 200", async () => {
                 await request(app).post('/register').send({username: "mockuser3", password: "mockpass"});
-                const response = await request(app).post('/login').send({username:"mockuser3", password: "mockpass"})
+                const response = await request(app).get('/quotes/mockuser3')
                 expect(response.statusCode).toBe(200);
                 
             })
