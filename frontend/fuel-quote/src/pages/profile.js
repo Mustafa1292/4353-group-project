@@ -17,6 +17,10 @@ import { withStyles } from "@material-ui/styles";
 import { connect } from 'react-redux';
 import { userActions } from '../actions';
 
+import {
+  API_URL
+} from "../constants/api";
+
 const styles = (theme) => ({
   // appBar: {
   //   position: 'relative',
@@ -73,7 +77,7 @@ class Profileform extends React.Component {
         city: "",
         us_state: "",
         zip: "",
-        ...props.user.profile,
+        // ...props.user.profile,
       },
       submitted: false,
       errors: {
@@ -84,19 +88,58 @@ class Profileform extends React.Component {
         us_state: null,
         zip: null,
       },
+      profile_loaded: false,
+      states_loaded: false,
+      us_states: ["TX", "CA", "NY"]
     };
-
-    this.us_states = ["TX", "CA", "NY"];
 
     // this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount(){
+    console.log(this.props.user);
+    fetch(API_URL + `/user/${this.props.user.username}/address`).then((response)=>{
+      return response.json().then((json)=>{
+        this.setState({ profile_loaded: true})
+        if(response.ok){
+          this.setState({ profile: json.address})
+        }
+      })
+    })
+
+    fetch(API_URL + `/us_states`).then((response)=>{
+      return response.json().then((json)=>{
+        this.setState({ states_loaded: true})
+        if(response.ok){
+          this.setState({ us_states: json})
+        }
+      })      
+    })
+  }
+
+  componentDidUpdate(prevProps) {
+    if(this.props.user !== prevProps.user){
+      this.setState({ profile_loaded: false}, ()=>{
+        fetch(API_URL + `/user/${this.props.user.username}/address`).then((response)=>{
+          return response.json().then((json)=>{
+            this.setState({ profile_loaded: true})
+            if(response.ok){
+              this.setState({ profile: json.address})
+            }
+          })
+        })    
+      })
+
+    }
+  }
+
+
   handleChange(event) {
     const { name, value } = event.target;
     const { profile, errors } = this.state;
     console.log(
-      "event ${JSO}" + JSON.stringify(profile) + " : " + this.us_states
+      "event ${JSO}" + JSON.stringify(profile) + " : " + this.state.us_states
     );
     if (value.length < 8 || value.length > 50) {
       errors[name] = `${name} should be greater than 8 and less than 50`;
@@ -130,7 +173,7 @@ class Profileform extends React.Component {
       errors[
         name
       ] = `${name} should be greater than 5 and less than or equal to 9`;
-    } else if (name === "us_state" && !this.us_states.includes(value)) {
+    } else if (name === "us_state" && !this.state.us_states.includes(value)) {
       errors[name] = `Select a valid state`;
     } else {
       errors[name] = null;
@@ -155,6 +198,18 @@ class Profileform extends React.Component {
   }
 
   render() {
+    if(!this.state.profile_loaded){
+      console.log("profile not loaded")
+      return null;
+    }
+    if(!this.state.states_loaded){
+      console.log("states not loaded")
+      return null;
+    }
+
+
+    console.log("all loaded")
+
     const classes = this.props.classes;
     return (
       <Container component="main" maxWidth="xs">
@@ -236,9 +291,11 @@ class Profileform extends React.Component {
                   <MenuItem value="">
                     <em>Select State</em>
                   </MenuItem>
-                  <MenuItem value={"TX"}>TX</MenuItem>
-                  <MenuItem value={"CA"}>CA</MenuItem>
-                  <MenuItem value={"NY"}>NY</MenuItem>
+                  {this.state.us_states.map((state)=>{
+                    return (
+                      <MenuItem key={state.abbreviation} value={state.abbreviation}>{state.abbreviation}</MenuItem>
+                    )
+                  })}
                 </Select>
                 <FormHelperText>{this.state.errors.us_state}</FormHelperText>
               </FormControl>

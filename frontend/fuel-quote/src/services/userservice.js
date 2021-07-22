@@ -1,4 +1,8 @@
 import { authHeader } from '../helpers';
+import {
+    API_URL
+} from "../constants/api";
+
 
 export const userService = {
     login,
@@ -14,7 +18,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
     console.log("user service login")
-    return fetch("http://localhost:8080/login", requestOptions)
+    return fetch(API_URL + "/login", requestOptions)
         .then(handleResponse)
         .then((user) => {
             console.log("Service response data:", user);
@@ -39,7 +43,7 @@ function register(user) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-    return fetch("http://localhost:8080/register", requestOptions)
+    return fetch(API_URL + "/register", requestOptions)
         .then(handleResponse)
         .then((data) => {
             console.log("Response from server after registration");
@@ -54,7 +58,7 @@ function updateProfile(username, profile) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({profile})
     };
-    return fetch(`http://localhost:8080/user/${username}/profile`, requestOptions)
+    return fetch(API_URL + `/user/${username}/profile`, requestOptions)
         .then(handleResponse)
         .then((data) => {
             console.log("Response from server after registration");
