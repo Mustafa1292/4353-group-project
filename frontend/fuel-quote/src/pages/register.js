@@ -20,12 +20,12 @@ import { connect } from 'react-redux';
 import { userActions } from '../actions';
 
 const styles = ((theme) => ({
-    // paper: {
-    //   marginTop: theme.spacing(8),
-    //   display: 'flex',
-    //   flexDirection: 'column',
-    //   alignItems: 'center',
-    // },
+     paper: {
+       marginTop: "15px",
+       display: 'flex',
+       flexDirection: 'column',
+       alignItems: 'center',
+     }
     // avatar: {
     //   margin: theme.spacing(1),
     //   backgroundColor: theme.palette.secondary.main,

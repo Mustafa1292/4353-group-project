@@ -12,6 +12,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 // import { makeStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { withStyles } from "@material-ui/styles";
 
 import { connect } from 'react-redux';
@@ -22,6 +24,12 @@ import {
 } from "../constants/api";
 
 const styles = (theme) => ({
+  paper: {
+    marginTop: "15px",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  }
   // appBar: {
   //   position: 'relative',
   // },
@@ -99,6 +107,7 @@ class Profileform extends React.Component {
 
   componentDidMount(){
     console.log(this.props.user);
+    if(this.props.user){ //check
     fetch(API_URL + `/user/${this.props.user.username}/address`).then((response)=>{
       return response.json().then((json)=>{
         this.setState({ profile_loaded: true})
@@ -107,6 +116,7 @@ class Profileform extends React.Component {
         }
       })
     })
+  }
 
     fetch(API_URL + `/us_states`).then((response)=>{
       return response.json().then((json)=>{
@@ -119,8 +129,12 @@ class Profileform extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log("update user:", this.props.user) //checking for an update user
     if(this.props.user !== prevProps.user){
       this.setState({ profile_loaded: false}, ()=>{
+        if(!this.props.user){ //checks
+          return
+        }
         fetch(API_URL + `/user/${this.props.user.username}/address`).then((response)=>{
           return response.json().then((json)=>{
             this.setState({ profile_loaded: true})
@@ -214,6 +228,10 @@ class Profileform extends React.Component {
     return (
       <Container component="main" maxWidth="xs">
         <React.Fragment>
+        <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+                      <LockOutlinedIcon />
+                    </Avatar>
           <Typography variant="h6" gutterBottom>
             Profile Management
           </Typography>
@@ -338,6 +356,7 @@ class Profileform extends React.Component {
           />
         </Grid> */}
           </Grid>
+          </div>
         </React.Fragment>
 
         <React.Fragment>

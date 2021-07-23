@@ -12,16 +12,20 @@ import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import { connect } from "react-redux";
 import { userActions } from "../actions";
+import CssBaseline from '@material-ui/core/CssBaseline';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 
-const styles = (theme) => ({
-  // submit: {
-  //   margin: theme.spacing(3, 0, 2),
-  // },
-});
+const styles = ((theme) => ({
+    paper: {
+      marginTop: "15px",
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    }
+}));
 
 class Quote extends React.Component {
   constructor(props) {
@@ -350,7 +354,8 @@ class Quote extends React.Component {
     const classes = this.props.classes;
     return (
       <Container component="main" maxWidth="xs">
-        <div>
+        <CssBaseline />
+        <div className={classes.paper} >
           <Avatar alt="Remy Sharp">
             <AssessmentIcon />
           </Avatar>
@@ -393,15 +398,17 @@ class Quote extends React.Component {
                 <div>{address.address1}</div>
                 <div>{address.address2}</div>
                 <div>{address.city + " " + address.us_state}</div>
-
+                
+                {/* can be removed since we don't need textfields? no input needed
                 <TextField
                   variant="outlined"
                   fullWidth
                   id="address"
                   label="Address"
                   name="address"
+                  value = {address.fullName} 
                   disabled
-                />
+                />*/}
               </Grid>
             )}
             <Grid item xs={12}>
@@ -411,26 +418,31 @@ class Quote extends React.Component {
                   <div>${this.state.suggestedPrice}</div>
                 )
               }
-              <TextField
+              {/*<TextField
                 variant="outlined"
                 fullWidth
                 id="suggested_price"
                 label="Suggested Price"
                 name="suggested_price"
+                value = {this.state.suggestedPrice} -->extra added but can be removed
                 disabled
-              />
+              />*/}
             </Grid>
             <Grid item xs={12}>
               <h3>Total Price:</h3>
-              <div>{this.state.totalPrice}</div>
-              <TextField
+              {
+                this.state.suggestedPrice === void 0 ? null : (
+              <div>${this.state.totalPrice}</div>
+              )
+              }
+              {/*<TextField
                 variant="outlined"
                 fullWidth
                 id="total"
                 label="Total"
                 name="total"
                 disabled
-              />
+              /> */}
             </Grid>
             <Grid item xs={12}>
               <Button

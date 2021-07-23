@@ -3,26 +3,28 @@ module.exports = mongoose => {
 
     const schema  = mongoose.Schema(
       {
-        delivery : "",
-        address : { type: Schema.Types.ObjectId,},
-        gallons : { type: String,},
-        total : { type: String,},
-
+        username: {type: String },
+        delivery : { type: Date },
+        gallons : { type: Number,},
+        address : {
         fullName: { type: String,},
-        address1: { type: String,},
-        address2: { type: String,},
-        city: { type: String,},
-        us_state: { type: String,},
-        zip: { type: Number,},
+          address1: { type: String,},
+          address2: { type: String,},
+          city: { type: String,},
+          us_state: { type: String,},
+          zip: { type: Number,},
+        },
+        suggestedPrice: { type: Number },
+        total : { type: Number,},
       },
       { timestamps: true }
     );
 
-    const UserProfile = mongoose.model(
-      "profile",
+    const Quotes = mongoose.model(
+      "quotes",
       schema
     );
   
-    return UserProfile;
+    return Quotes;
   };
 

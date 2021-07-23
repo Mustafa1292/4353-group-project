@@ -6,6 +6,7 @@ const cors = require("cors");
 const userController = require("./app/controllers/users.js");
 const profileController = require("./app/controllers/profile.js");
 const statesController = require("./app/controllers/states.js");
+const quotesController = require("./app/controllers/quotes.js");
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", userController);
 app.use("/", profileController);
 app.use("/", statesController);
+app.use("/", quotesController);
 
 app.get("/", (req, res) => {
   res.json({ message: "FuelCo App" });
@@ -83,7 +85,7 @@ app.post("/login", (req, res) => {
 
   //   res.json({"result": "success"})
   // });
-
+/*
   app.post("/user/:username/profile", (req, res) => {
 
     console.log("Update profile the USER", req.params.username)
@@ -159,7 +161,7 @@ app.post("/login", (req, res) => {
     })
     res.status(200).json({"result": "quotes by usernam", quotes: items});
 
-  })
+  })*/
 
   app.use(function (req, res, next) {
     res.status(404).json({

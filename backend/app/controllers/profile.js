@@ -93,4 +93,26 @@ router.post("/user/:username/profile", bodyParser.json(), (req, res, next) => {
 
   });
 
+  //Needed for checks
+  router.get("/profile/:id", (req, res, next)=>{
+    console.log("addrses is", req.params);
+    const id = req.params.id; //get username from the url param
+
+    return Profile_model.findOne({
+        _id: id
+    }).then((profile)=>{
+
+        if(!profile){
+            return res.status(404).json({ result: "no such user" });
+        }else{
+
+            res
+            .status(200)
+            .json({ result: "user address", address: profile });      
+        }
+    }).catch((error)=>{
+        next(error);
+    })
+  })
+
 module.exports = router;
