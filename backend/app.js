@@ -30,7 +30,7 @@ db.mongoose
 
 const users = ['test'];
 
-var quoteId = 0; 
+var quoteId = 0;
 const quotes = {};
 
 app.use(cors(corsOptions));
@@ -46,45 +46,45 @@ app.get("/", (req, res) => {
   res.json({ message: "FuelCo App" });
 });
 
-app.post("/login", (req, res) => {
+// app.post("/login", (req, res) => {
 
-    if(!req.body || !req.body.username || !req.body.password) {
-      return res.status(400).json({"result": "Bad Request"})
-    }
+//     if(!req.body || !req.body.username || !req.body.password) {
+//       return res.status(400).json({"result": "Bad Request"})
+//     }
 
-    const {username: name, password: pass} = req.body;
-    // var name = req.body.username;
-    // var pass = req.body.password;
+//     const {username: name, password: pass} = req.body;
+//     // var name = req.body.username;
+//     // var pass = req.body.password;
 
-    // find the user in users[]
+//     // find the user in users[]
 
-    if(users.some(user => user.username === name && user.password === pass)) {
-      return res.json(users.find((user) => user.username === name));
-    } else {
-      return res.status(404).json({"result": "invalid Username or password"})
-    }
+//     if(users.some(user => user.username === name && user.password === pass)) {
+//       return res.json(users.find((user) => user.username === name));
+//     } else {
+//       return res.status(404).json({"result": "invalid Username or password"})
+//     }
 
-    // if(name === 'test' && pass === 'test' ){
-    //     // hardcoded user for now
-    //     res.json({"name": "Test User", id: "abcde1234"})
-    // }else{
-    //     res.json({"result": "success"})
-    // }
-  });
+//     // if(name === 'test' && pass === 'test' ){
+//     //     // hardcoded user for now
+//     //     res.json({"name": "Test User", id: "abcde1234"})
+//     // }else{
+//     //     res.json({"result": "success"})
+//     // }
+//   });
 
 
 
-  // app.post("/register", (req, res) => {
-  //   const name = req.body.username;
-  //   const pass = req.body.password;
+// app.post("/register", (req, res) => {
+//   const name = req.body.username;
+//   const pass = req.body.password;
 
-  //   console.log("Register new user with ", name, pass);
-  //   // grab user and pass store in db
+//   console.log("Register new user with ", name, pass);
+//   // grab user and pass store in db
 
-  //   users.push({username: name, password: pass});
+//   users.push({username: name, password: pass});
 
-  //   res.json({"result": "success"})
-  // });
+//   res.json({"result": "success"})
+// });
 /*
   app.post("/user/:username/profile", (req, res) => {
 
@@ -163,20 +163,20 @@ app.post("/login", (req, res) => {
 
   })*/
 
-  app.use(function (req, res, next) {
-    res.status(404).json({
-      error: "route doesn't exist"
-    })
+app.use(function (req, res, next) {
+  res.status(404).json({
+    error: "route doesn't exist"
   })
+})
 
-  app.use(function (err, req, res, next) {
-    // logic
+app.use(function (err, req, res, next) {
+  // logic
 
-    console.error(err);
+  console.error(err);
 
-    res.status(500).json({
-      error:true,
-      message: err.message || err.toString()
-    })
+  res.status(500).json({
+    error: true,
+    message: err.message || err.toString()
   })
-  module.exports = app;
+})
+module.exports = app;
