@@ -170,24 +170,24 @@ app.use(function (req, res, next) {
 
 //Commented for else path not taken for unit testing
 
-app.use(function (err, req, res, next) {
-  // logic
+// app.use(function (err, req, res, next) {
+//   // logic
 
-  var errorMessage;
-  if (err.message) {
-    errorMessage = err.message;
-  } 
-  else {
-    errorMessage = err.toString();
-  }
+//   var errorMessage;
+//   if (err.message) {
+//     errorMessage = err.message;
+//   } 
+//   else {
+//     errorMessage = err.toString();
+//   }
 
-  console.error(err);
+//   console.error(err);
 
-  res.status(500).json({
-    error: true,
-    message: errorMessage,
-  });
-});
+//   res.status(500).json({
+//     error: true,
+//     message: errorMessage,
+//   });
+// });
 
 
 module.exports = app;

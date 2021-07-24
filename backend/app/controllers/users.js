@@ -42,17 +42,23 @@ router.post("/login", bodyParser.json(), (req, res) => {
 
   const { username: name, password: pass } = req.body;
 
+  // find user with the corect username
   User_model.findOne({ username: name })
     .exec()
     .then((possibleUser) => {
       if (!possibleUser) {
         return res.status(404).json({ result: "invalid Username or password" });
       }
-      if (possibleUser.password === pass) {
-        return res.status(200).json(possibleUser);
-      } else {
-        return res.status(404).json({ result: "invalid Username or password" });
-      }
+      // run the compare password method to test the password hash to the bodies password
+      return possibleUser.comparePasswords(pass)
+      .then((correctPassword)=>{
+        // if correct pasword, send back user
+        if (correctPassword) {
+          return res.status(200).json(possibleUser);
+        } else {
+          return res.status(404).json({ result: "invalid Username or password" });
+        }
+      });
     });
 });
 
