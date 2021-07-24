@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-
 const userController = require("./app/controllers/users.js");
 const profileController = require("./app/controllers/profile.js");
 const statesController = require("./app/controllers/states.js");
@@ -11,27 +10,27 @@ const quotesController = require("./app/controllers/quotes.js");
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:3000"
+  origin: "http://localhost:3000",
 };
 
 const db = require("./app/models");
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   })
   .then(() => {
     console.log("Connected to the database!");
-  })
-  .catch(err => {
-    console.log("Cannot connect to the database!", err);
-    process.exit();
   });
+// .catch(err => {
+//   console.log("Cannot connect to the database!", err);
+//   process.exit();
+// });
 
-const users = ['test'];
+// const users = ['test'];
 
-var quoteId = 0;
-const quotes = {};
+// var quoteId = 0;
+// const quotes = {};
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
@@ -71,8 +70,6 @@ app.get("/", (req, res) => {
 //     //     res.json({"result": "success"})
 //     // }
 //   });
-
-
 
 // app.post("/register", (req, res) => {
 //   const name = req.body.username;
@@ -165,18 +162,25 @@ app.get("/", (req, res) => {
 
 app.use(function (req, res, next) {
   res.status(404).json({
-    error: "route doesn't exist"
-  })
-})
+    error: "route doesn't exist",
+  });
+});
 
 app.use(function (err, req, res, next) {
   // logic
+
+  var errorMessage;
+  if (err.message) {
+    errorMessage = err.errorMessage;
+  } else {
+    errorMessage = err.toString();
+  }
 
   console.error(err);
 
   res.status(500).json({
     error: true,
-    message: err.message || err.toString()
-  })
-})
+    message: errorMessage,
+  });
+});
 module.exports = app;

@@ -1,4 +1,5 @@
 const request = require("supertest");
+const { response } = require("./app");
 const app = require('./app')
 
 describe("app", () => {
@@ -152,6 +153,43 @@ describe("app", () => {
 
             })
 
+        });
+
+        describe("/us_states", ()=> {
+            it("should return response 200", async() => {
+                const response = await response(app).get('/us_states');
+                console.log("US_States response body is", response.body)
+                expect(response.statusCode).toBe(200);
+                
+            })
+        })
+
+        describe("/profile/:id", () => {
+            it("should handle requests if the id does not exist", async () => {
+
+                const response = await request(app).get("/profile/000000000000000000000000");
+                console.log("profile id missing:", response.body)
+
+                expect(response.statusCode).toBe(404);
+            })
+
+            it("should be successful if requestsing a profile that exists", async ()=>{
+                const profileData = {
+                    "address1" : "L1",
+                    "address2" : "L2",
+                    "city" : "San Francisco",
+                    "us_state" : "CA",
+                    "zip" : 100000,
+                };
+                const createResponse = await request(app).post("/user/mockuser/profile").send(profileData);
+                console.log("Create Response: ", createResponse.body);
+                const profileId = createResponse.body.profile._id;
+                const response = await request(app).get("/profile/" + profileId);
+                expect(response.statusCode).toBe(200);
+
+                
+            })
+               
         });
 
     });

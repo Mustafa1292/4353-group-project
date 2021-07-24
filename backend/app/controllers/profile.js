@@ -112,7 +112,11 @@ router.get("/profile/:id", (req, res, next) => {
                 .json({ result: "user address", address: profile });
         }
     }).catch((error) => {
-        next(error);
+        res
+        .status(500)
+        .json({
+            error: error.message
+        });
     })
 })
 
