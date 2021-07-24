@@ -139,14 +139,16 @@ describe("app", () => {
             it("should return return a 200 response with the quote ID", async () => {
 
                 let mockOrderData = {
-                    delivery: "2021-07-26T00:00:00.000Z",
+                    date: "2021-07-24T00:00:00.000Z",
                     gallons: 50
                 }
 
-                const response = await request(app).post("/quotes/mockuser3/order").send(mockOrderData);
+                const response = await request(app).post("/quotes/mockuser/order").send(mockOrderData);
+                console.log("NewOrder Response body is", response.body)
                 // expect(response.body).toEqual({ result: "added a quote", quoteId: 0 })
                 expect(response.statusCode).toBe(200);
                 expect(response.body.result).toEqual("added a quote")
+                // expect(response.body).toEqual({ result: "added a quote", quoteId: 0 })
 
             })
 
