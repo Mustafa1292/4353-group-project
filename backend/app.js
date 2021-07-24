@@ -166,13 +166,18 @@ app.use(function (req, res, next) {
   });
 });
 
+
+
+//Commented for else path not taken for unit testing
+
 app.use(function (err, req, res, next) {
   // logic
 
   var errorMessage;
   if (err.message) {
-    errorMessage = err.errorMessage;
-  } else {
+    errorMessage = err.message;
+  } 
+  else {
     errorMessage = err.toString();
   }
 
@@ -183,4 +188,6 @@ app.use(function (err, req, res, next) {
     message: errorMessage,
   });
 });
+
+
 module.exports = app;

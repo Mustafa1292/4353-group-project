@@ -14,10 +14,9 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.get('/us_states', (req, res, next)=>{
+
+    
     US_state_model.find().exec().then((documents)=>{
-
-        
-
         res.status(200).json(documents)
     }).catch((err)=>{
         next(err)

@@ -157,10 +157,11 @@ describe("app", () => {
 
         describe("/us_states", ()=> {
             it("should return response 200", async() => {
-                const response = await response(app).get('/us_states');
+                const response = await request(app).get('/us_states');
                 console.log("US_States response body is", response.body)
                 expect(response.statusCode).toBe(200);
-                
+                // expect(response.body).not.equal(null);
+
             })
         })
 
