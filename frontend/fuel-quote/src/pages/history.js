@@ -82,9 +82,9 @@ class HistoryTable extends React.Component {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.id}>
+            <TableRow key={row._id}>
               <TableCell component="th" scope="row">
-                {row.id}
+                {row._id}
               </TableCell>
               <TableCell align="right">{row.gallons}</TableCell>
               <TableCell align="right">
