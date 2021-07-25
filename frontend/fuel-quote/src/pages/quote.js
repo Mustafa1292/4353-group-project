@@ -89,7 +89,7 @@ class Quote extends React.Component {
 
       let dateNow = new Date();
       if (date < dateNow) {
-        errors[name] = `${name} date can't be before today`;
+        errors[name] = `Delivery date can't be before today`;
       } else {
         errors[name] = null;
       }
@@ -215,7 +215,7 @@ class Quote extends React.Component {
 
       let dateNow = new Date();
       if (date < dateNow) {
-        errors[name] = `${name} date can't be before today`;
+        errors[name] = `Delivery date can't be before today`;
       } else {
         errors[name] = null;
       }
@@ -229,9 +229,9 @@ class Quote extends React.Component {
       errors: {
         ...errors,
       },
-    }, ()=>{
+    }/*, ()=>{
       this.updateTotalPrice()
-    });
+    }*/);
 
   }
 
@@ -241,10 +241,10 @@ class Quote extends React.Component {
 
     const { name, value } = event.target;
     const { quote, errors } = this.state;
-    if (name === "gallons_req" && !/^\d{0,1000}$/.test(value)) {
+    if (name === "gallons_req" && !/^([1-9][0-9]{0,3}|10000)$/.test(value)) {
       errors[
         name
-      ] = `${name} should be greater than 1 and less than or equal to 1000`;
+      ] = `Gallons Requested should be greater than 1 and less than or equal to 10,000`;
     } else {
       errors[name] = null;
     }
@@ -256,9 +256,9 @@ class Quote extends React.Component {
       errors: {
         ...errors,
       },
-    }, ()=>{
+    }/*,()=>{
       this.updateSuggestedPrice()
-    });
+    }*/);
   }
 
   updateSuggestedPrice(){
@@ -267,17 +267,17 @@ class Quote extends React.Component {
 
     if(address === void 0){
       console.error("No address found yet")
-      this.setState({ suggestedPrice: void 0})
+      //this.setState({ suggestedPrice: void 0})
       return;
     }
     if(gallons === void 0 || gallons === null){
       console.error("no gallons set yet")
-      this.setState({ suggestedPrice: void 0})
+      //this.setState({ suggestedPrice: void 0})
       return;
     }
     if(this.state.errors.gallons_req){
       console.error("gallons has error:", this.state.errors.gallons_req)
-      this.setState({ suggestedPrice: void 0})
+      //this.setState({ suggestedPrice: void 0})
       return;
     }
 
@@ -321,21 +321,21 @@ class Quote extends React.Component {
 
     if(gallons === void 0 || gallons === null){
       console.error("no gallons set yet")
-      this.setState({ totalPrice: void 0})
+      //this.setState({ totalPrice: void 0})
       return;
     }
     if(this.state.errors.gallons_req){
       console.error("gallons has error:", this.state.errors.gallons_req)
-      this.setState({ totalPrice: void 0})
+      //this.setState({ totalPrice: void 0})
       return;
     }
 
     if(suggestedPrice === void 0){
       console.error("suggestedPrice not available");
-      this.setState({ totalPrice: void 0})
+      //this.setState({ totalPrice: void 0})
       return;
     }
-
+    console.log("success on total price")
     const total = parseInt(gallons) * suggestedPrice;
     this.setState({ totalPrice: total})
 
@@ -372,6 +372,7 @@ class Quote extends React.Component {
                 value={this.state.quote.delivery}
                 onChange={(e) => this.updateDate(e)}
                 error={this.state.errors.delivery !== null}
+                helperText={this.state.errors.delivery}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -414,7 +415,7 @@ class Quote extends React.Component {
             <Grid item xs={12}>
               <h3>Suggested Price</h3>
               {
-                this.state.suggestedPrice === void 0 ? null : (
+                this.state.suggestedPrice === void 0 ? <div>$0</div> : (
                   <div>${this.state.suggestedPrice}</div>
                 )
               }
@@ -431,7 +432,7 @@ class Quote extends React.Component {
             <Grid item xs={12}>
               <h3>Total Price:</h3>
               {
-                this.state.suggestedPrice === void 0 ? null : (
+                this.state.suggestedPrice === void 0 ? <div>$0</div> : (
               <div>${this.state.totalPrice}</div>
               )
               }
@@ -446,6 +447,24 @@ class Quote extends React.Component {
             </Grid>
             <Grid item xs={12}>
               <Button
+                disabled={
+                  this.state.quote.delivery === "" || this.state.quote.gallons_req === "" || this.state.address === "" ? true : false
+                }
+                onClick={() => {this.updateSuggestedPrice()}}
+                type="button"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.button}
+              >
+                Get Quote
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+               disabled={
+                  this.state.quote.delivery === "" || this.state.quote.gallons_req === "" || this.state.address === "" ? true : false
+                }
                 onClick={(e)=>{this.handleSubmit(e)}}
                 type="submit"
                 fullWidth
