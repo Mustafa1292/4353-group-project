@@ -359,8 +359,8 @@ class Quote extends React.Component {
           <Avatar alt="Remy Sharp">
             <AssessmentIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            QuoteForm
+          <Typography component="h1" variant="h6">
+            Quote Form
           </Typography>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -398,7 +398,7 @@ class Quote extends React.Component {
                 <div>{address.fullName}</div>
                 <div>{address.address1}</div>
                 <div>{address.address2}</div>
-                <div>{address.city + " " + address.us_state}</div>
+                <div>{address.city + ", " + address.us_state + " " + address.zip}</div>
                 
                 {/* can be removed since we don't need textfields? no input needed
                 <TextField

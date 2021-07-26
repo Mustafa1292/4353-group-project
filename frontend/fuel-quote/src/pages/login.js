@@ -138,16 +138,16 @@ class LoginPage extends React.Component {
                     color="primary"
                     className={classes.submit}
                   >
-                    Sign In EDITED
+                    Sign In
                   </Button>
                   <Grid container>
                     <Grid item xs>
                       <MLink href="#" variant="body2">
-                        Forgot password?
+                        {/* Forgot password? */}
                       </MLink>
                     </Grid>
                     <Grid item>
-                      <MLink href="#" variant="body2">
+                      <MLink href="/register" variant="body2">
                         {"Don't have an account? Sign Up"}
                       </MLink>
                     </Grid>

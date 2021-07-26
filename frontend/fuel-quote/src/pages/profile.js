@@ -369,7 +369,7 @@ class Profileform extends React.Component {
                         className={classes.submit}
                         onClick={this.handleSubmit}
                       >
-                        Sign Up
+                        Update
                       </Button>
           </div>
         </React.Fragment>

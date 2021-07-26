@@ -64,7 +64,7 @@ class HistoryTable extends React.Component {
         console.log("rows:", rows); //better log
         return (
             <div>
-                <h1>HistoryTable</h1>
+                <center><h3>History</h3></center>
 
                 <Container component="main" maxWidth="m">
 

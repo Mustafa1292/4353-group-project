@@ -164,10 +164,10 @@ class RegisterPage extends React.Component {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                          <FormControlLabel
+                          {/* <FormControlLabel
                             control={<Checkbox value="allowExtraEmails" color="primary" />}
                             label="I want to receive future fuel quotes."
-                          />
+                          /> */}
                         </Grid>
                       </Grid>
                       <Button

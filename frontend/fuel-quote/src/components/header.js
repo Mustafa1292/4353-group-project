@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar(props) {
   const classes = useStyles();
   const navigation = useHistory();
 
@@ -29,7 +29,7 @@ export default function ButtonAppBar() {
   const handleClick = (e) =>{
       console.log(`/${e.currentTarget.id}`);
       navigation.push(`/${e.currentTarget.id}`);
-  }
+    }
   return (
     <div className={classes.root}>
       <AppBar position="static">
