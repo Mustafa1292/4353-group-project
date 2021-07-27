@@ -382,6 +382,7 @@ class Quote extends React.Component {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
+                type="number"
                 fullWidth
                 required
                 id="gallons"
