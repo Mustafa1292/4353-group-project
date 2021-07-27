@@ -449,7 +449,7 @@ class Quote extends React.Component {
             <Grid item xs={12}>
               <Button
                 disabled={
-                  this.state.quote.delivery === "" || this.state.quote.gallons_req === "" || this.state.address === "" ? true : false
+                  this.state.quote.delivery === "" || this.state.quote.gallons_req === "" || this.state.address === "" || this.state.errors.gallons_req !== null || this.state.errors.delivery !== null ? true : false
                 }
                 onClick={() => {this.updateSuggestedPrice()}}
                 type="button"
@@ -464,7 +464,7 @@ class Quote extends React.Component {
             <Grid item xs={12}>
               <Button
                disabled={
-                  this.state.quote.delivery === "" || this.state.quote.gallons_req === "" || this.state.address === "" ? true : false
+                this.state.quote.delivery === "" || this.state.quote.gallons_req === "" || this.state.address === "" || this.state.errors.gallons_req !== null || this.state.errors.delivery !== null ? true : false
                 }
                 onClick={(e)=>{this.handleSubmit(e)}}
                 type="submit"
