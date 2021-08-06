@@ -19,7 +19,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = makeStyles((theme) => ({
+const styles = ((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
       display: 'flex',
@@ -43,9 +43,9 @@ class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         console.log(JSON.stringify(props));
-        console.log("login");
+        console.log("thisconlogin");
 
-        this.props.logout();
+      //  this.props.logout();
 
         this.state = {
             username: '',
@@ -55,9 +55,11 @@ class LoginPage extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        // this.handleNewLogin = this.handleNewLogin.bind(this);
     }
 
     handleChange(e) {
+      // console.log("change for the field", e);
         const { name, value } = e.target;
         this.setState({ [name]: value });
     }
@@ -71,6 +73,14 @@ class LoginPage extends React.Component {
             this.props.login(username, password);
         }
     }
+
+    // handleNewLogin(e) {
+    //   const { username, password } = this.state;
+    //   this.setState({ submitted: true });
+    //     if (username && password) {
+    //         this.props.login(username, password);
+    //     }
+    // }
 
     render() {
         const { loggingIn } = this.props;
@@ -87,17 +97,22 @@ class LoginPage extends React.Component {
                 <Typography component="h1" variant="h5">
                   Sign in
                 </Typography>
-                <form className={classes.form} noValidate>
+
+                {/* <button onClick={this.handleNewLogin}>Another login in</button> */}
+
+                <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
                   <TextField
                     variant="outlined"
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
+                    id="username"
+                    label="Username"
+                    name="username"
                     autoComplete="email"
                     autoFocus
+                    value={username}
+                    onChange={this.handleChange}
                   />
                   <TextField
                     variant="outlined"
@@ -109,13 +124,14 @@ class LoginPage extends React.Component {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    value={password}
+                    onChange={this.handleChange}
                   />
                   <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
                     label="Remember me"
                   />
                   <Button
-                  onSubmit={this.handleSubmit}
                     type="submit"
                     fullWidth
                     variant="contained"
@@ -127,11 +143,11 @@ class LoginPage extends React.Component {
                   <Grid container>
                     <Grid item xs>
                       <MLink href="#" variant="body2">
-                        Forgot password?
+                        {/* Forgot password? */}
                       </MLink>
                     </Grid>
                     <Grid item>
-                      <MLink href="#" variant="body2">
+                      <MLink href="/register" variant="body2">
                         {"Don't have an account? Sign Up"}
                       </MLink>
                     </Grid>
@@ -140,13 +156,13 @@ class LoginPage extends React.Component {
               </div>
             </Container>
           );
-        };   
+        } 
 }
 
 function mapState(state) {
     const { loggingIn } = state.authentication;
     return { loggingIn };
-};
+}
 
 const actionCreators = {
     login: userActions.login,
